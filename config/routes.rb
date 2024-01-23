@@ -3,7 +3,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: %i[show create update destroy]
       resources :tokens, only: [:create]
-      resources :posts
+      resources :posts do
+        resources :comments
+      end
     end
   end
 end

@@ -1,7 +1,8 @@
 class Post < ApplicationRecord
-  belongs_to :user
   validates :title, presence: true
   validates :body, presence: true
+  belongs_to :user
+  has_many :comments, dependent: :destroy
 
   scope :filter_by_title, lambda { |query| where("lower(title) LIKE ?", "%#{query.downcase}%") }
   scope :sort_by_creation, lambda { order(created_at: :asc) }

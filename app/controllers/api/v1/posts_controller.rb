@@ -4,7 +4,7 @@ class Api::V1::PostsController < ApplicationController
   before_action :check_owner, only: %i[update destroy]
 
   def show
-    render json: PostSerializer.new(@post, { include: [:user] }).serializable_hash, status: :ok
+    render json: PostSerializer.new(@post, { include: [:comments] }).serializable_hash, status: :ok
   end
 
   def index
