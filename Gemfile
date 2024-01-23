@@ -53,3 +53,5 @@ gem "bcrypt", "~> 3.1"
 gem "fast_jsonapi", "~> 1.5"
 
 gem "jwt", "~> 2.7"
+
+gem "kaminari", "~> 1.2"
