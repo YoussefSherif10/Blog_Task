@@ -1,9 +1,10 @@
 class Post < ApplicationRecord
   after_create :schedule_deletion
+  before_destroy :remove_scheduled_deletion
 
   validates :title, presence: true
   validates :body, presence: true
-  validates :tags, presence: true
+  validate :tags_array
   belongs_to :user
   has_many :comments, dependent: :destroy
 
@@ -22,6 +23,15 @@ class Post < ApplicationRecord
   end
 
   private
+
+  def remove_scheduled_deletion
+    DeletePostJob.remove_scheduled_job(self.id)
+  end
+
+  def tags_array
+    errors.add(:tags, "must be an array of strings") unless tags.is_a?(Array)
+    errors.add(:tags, "must have at least one tag") if tags.empty?
+  end
 
   def schedule_deletion
     DeletePostJob.perform_in(24.hours, self.id)

@@ -1,11 +1,4 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  content: MyText
-  user: one
-  post: one
-
-two:
-  content: MyText
-  user: two
-  post: two
+  content: "This is a comment."
+  post: one # assuming you have a posts fixture
+  user: one # assuming you have a users fixture
