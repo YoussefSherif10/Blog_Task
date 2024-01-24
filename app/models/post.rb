@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  after_create :schedule_deletion
+
   validates :title, presence: true
   validates :body, presence: true
   validates :tags, presence: true
@@ -17,5 +19,11 @@ class Post < ApplicationRecord
     posts = posts.recent if params[:recent]
     posts = posts.sort_by_creation if params[:sort_by_creation]
     posts
+  end
+
+  private
+
+  def schedule_deletion
+    DeletePostJob.perform_in(24.hours, self.id)
   end
 end
